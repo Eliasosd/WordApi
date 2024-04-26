@@ -16,17 +16,18 @@ namespace WordApi.Controllers
                 return BadRequest("Inmatningen kan inte vara tom eller bara mellanslag");
             }
 
-            var separaratedWords = SeparateWords(input.Text);
-            var countedWords = CountWords(separaratedWords);
-            
-            return Ok(countedWords);
+            var separatedWords = SeparateWords(input.Text);
+            var countedWords = CountWords(separatedWords);
+            var sortedDict = SortDictionaryByDescending(countedWords);
+
+            return Ok(sortedDict);
         }
 
         private string[] SeparateWords(string text)
         {
-            var seraratedWords = text.Split(new char[] { ' ', '.', '"', '?', '(', ')', ',', '!', '[', ']' }, StringSplitOptions.RemoveEmptyEntries);
+            var separatedWords = text.Split(new char[] { ' ', '.', '"', '?', '(', ')', ',', '!', '[', ']' }, StringSplitOptions.RemoveEmptyEntries);
 
-            return seraratedWords;
+            return separatedWords;
         }
 
         private Dictionary<string, int> CountWords(string[] wordsToCount)
@@ -48,9 +49,7 @@ namespace WordApi.Controllers
                 }
             }
 
-            var sortedDict = SortDictionaryByDescending(wordDict);
-
-            return sortedDict;
+            return wordDict;
         }
 
         private Dictionary<string, int> SortDictionaryByDescending(Dictionary<string, int> wordDict)
