@@ -5,7 +5,7 @@ För att starta detta projekt krävs Visual Studio, med stöd för .NET 8.
 Detta projekt innehåller ett API som har en funktion:
 - Att räkna ord i en sträng.
 
-Det krävs inget speciellt för att köra senna applikation, du kommer att behöva generera ett SSL-certifikat för att komma åt Swagger-gränssnittet, 
+Det krävs inget speciellt för att köra denna applikation, du kommer att behöva generera ett SSL-certifikat för att komma åt Swagger-gränssnittet, 
 vill du inte göra det kan du även nyttja applikationen i inkognito-läge.
 
 Du startar APIet genom att starta projektet i Visual Studio, din standardwebbläsare startas automatiskt och väl i Swaggergränssnittet kommer du
