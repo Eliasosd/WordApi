@@ -1,6 +1,6 @@
 # WordApi
 
-För att starta detta projekt krävs Visual Studio på en windows-dator, med stöd för .NET 8 (17.9.6 vid skrivandet av denna README).
+För att starta detta projekt krävs en lämplig IDE, med stöd för .NET 8 samt installerad .NET SDK (Applikationen är skriven och testad i Visual Studio 17.9.6).
 
 Detta projekt innehåller ett API som har en funktion:
 - Att räkna ord i en sträng.
