@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
+using WordApi.Interfaces;
 using WordApi.Models;
 using WordApi.Services;
 
@@ -11,11 +12,11 @@ namespace WordApi.Controllers
     public class WordCountController : ControllerBase
     {
 
-        private readonly WordCountService _wordCountService;
+        private readonly IWordCountService _wordCountService;
 
-        public WordCountController()
+        public WordCountController(IWordCountService wordCountService)
         {
-            _wordCountService = new WordCountService();
+            _wordCountService = wordCountService;
         }
 
         [Consumes(MediaTypeNames.Text.Plain)]

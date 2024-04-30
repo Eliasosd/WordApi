@@ -1,4 +1,5 @@
 using WordApi.Formatters;
+using WordApi.Interfaces;
 using WordApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<WordCountService>();
+builder.Services.AddScoped<IWordCountService, WordCountService>();
 builder.Services.AddControllers(options =>
 {
     options.InputFormatters.Add(new PlainTextFormatter());

@@ -1,6 +1,8 @@
-﻿namespace WordApi.Services
+﻿using WordApi.Interfaces;
+
+namespace WordApi.Services
 {
-    public class WordCountService
+    public class WordCountService : IWordCountService
     {
         public Dictionary<string, int> CountWords(string text)
         {
