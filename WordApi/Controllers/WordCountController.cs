@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mime;
 using WordApi.Models;
+using WordApi.Services;
 
 namespace WordApi.Controllers
 {
@@ -8,56 +10,27 @@ namespace WordApi.Controllers
     [ApiController]
     public class WordCountController : ControllerBase
     {
-        [HttpPost]
-        public IActionResult Post([FromBody] TextInput input)
+
+        private readonly WordCountService _wordCountService;
+
+        public WordCountController()
         {
-            if (string.IsNullOrWhiteSpace(input.Text))
+            _wordCountService = new WordCountService();
+        }
+
+        [Consumes(MediaTypeNames.Text.Plain)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpPost]
+        public IActionResult Post([FromBody] string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
             {
                 return BadRequest("Inmatningen kan inte vara tom eller bara mellanslag");
             }
 
-            var separatedWords = SeparateWords(input.Text);
-            var countedWords = CountWords(separatedWords);
-            var sortedDict = SortDictionaryByDescending(countedWords);
+            var result = _wordCountService.CountWords(input);
 
-            return Ok(sortedDict);
-        }
-
-        private string[] SeparateWords(string text)
-        {
-            var separatedWords = text.Split(new char[] { ' ', '.', '"', '?', '(', ')', ',', '!', '[', ']' }, StringSplitOptions.RemoveEmptyEntries);
-
-            return separatedWords;
-        }
-
-        private Dictionary<string, int> CountWords(string[] wordsToCount)
-        {
-            var wordDict = new Dictionary<string, int>();
-
-            foreach (var word in wordsToCount)
-            {
-                var capitalizedWord = word.Substring(0, 1).ToUpper() + word.Substring(1).ToLower();
-
-                if (wordDict.ContainsKey(capitalizedWord)) 
-                {
-                    wordDict[capitalizedWord]++;
-                }
-
-                else
-                {
-                    wordDict[capitalizedWord] = 1;
-                }
-            }
-
-            return wordDict;
-        }
-
-        private Dictionary<string, int> SortDictionaryByDescending(Dictionary<string, int> wordDict)
-        {
-            var sortedDict = wordDict.OrderByDescending(x => x.Value)
-                .Take(10)
-                .ToDictionary(x => x.Key, x => x.Value);
-            return sortedDict;
+            return Ok(result);
         }
     }
 }
